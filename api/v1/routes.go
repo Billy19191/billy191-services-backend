@@ -1,7 +1,12 @@
 package v1
 
-import "github.com/gin-gonic/gin"
+import (
+	"database/sql"
 
-func RegisterRoutes(router *gin.Engine) {
-	registerUserRoutes(router)
+	"github.com/gin-gonic/gin"
+)
+
+func RegisterRoutes(router *gin.Engine, db *sql.DB) {
+
+	registerMorphoRoutes(router, db)
 }

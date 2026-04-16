@@ -11,8 +11,8 @@ import (
 )
 
 type Config struct {
-	port int
-	db   *sql.DB
+	Port int
+	DB   *sql.DB
 }
 
 func LoadConfig() (*Config, error) {
@@ -42,8 +42,8 @@ func LoadConfig() (*Config, error) {
 	)
 
 	return &Config{
-		port: portInt,
-		db:   db,
+		Port: portInt,
+		DB:   db,
 	}, nil
 }
 
