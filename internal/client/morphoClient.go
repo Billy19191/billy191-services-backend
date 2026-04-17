@@ -76,8 +76,11 @@ func (c *MorphoClient) GetVaultPositionByWallet(address string, chainId int) (*m
 	}
 
 	var morphoResponse model.MorphoResponse
-	if err := json.Unmarshal(resBody, &morphoResponse); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal response: %w", err)
+
+	errMapModel := json.Unmarshal(resBody, &morphoResponse)
+
+	if errMapModel != nil {
+		return nil, fmt.Errorf("failed to unmarshal response: %w", errMapModel)
 	}
 
 	return &morphoResponse, nil

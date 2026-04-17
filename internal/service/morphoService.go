@@ -26,5 +26,14 @@ func (s *MorphoService) GetVaultPositionByWallet(walletAddress string, chainID i
 		return nil, fmt.Errorf("failed to get vault position: %w", err)
 	}
 
+	filteredZeroAssetsPosition := make([]model.VaultV2Position, 0)
+	for _, position := range result.Data.UserByAddress.VaultV2Positions {
+		assets, _ := position.Assets.Float64()
+		if assets != 0 {
+			filteredZeroAssetsPosition = append(filteredZeroAssetsPosition, position)
+		}
+	}
+	result.Data.UserByAddress.VaultV2Positions = filteredZeroAssetsPosition
+
 	return result, nil
 }
