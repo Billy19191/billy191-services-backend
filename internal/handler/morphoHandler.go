@@ -39,6 +39,6 @@ func (h *morphoHandler) GetCurrentVaultPosition(context *gin.Context) {
 	}
 
 	context.JSON(http.StatusOK, gin.H{
-		"data": result.Data.UserByAddress.VaultV2Positions,
+		"data": result.Data.Vault,
 	})
 }

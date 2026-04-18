@@ -22,7 +22,7 @@ func NewMorphoClient() *MorphoClient {
 	}
 }
 
-func (c *MorphoClient) GetVaultPositionByWallet(address string, chainId int) (*model.MorphoResponse, error) {
+func (c *MorphoClient) GetVaultPositionByWallet(address string, chainId int) (*model.MorphoResponseEntity, error) {
 	const vaultPositionQuery = `query UserByAddress($address: String!, $chainId: Int) {
 		userByAddress(address: $address, chainId: $chainId) {
 			vaultV2Positions {
@@ -40,7 +40,7 @@ func (c *MorphoClient) GetVaultPositionByWallet(address string, chainId int) (*m
 			}
 		}
 	}`
-	reqBody := model.MorphoRequest{
+	reqBody := model.MorphoRequestEntity{
 		Query: vaultPositionQuery,
 		Variables: map[string]any{
 			"address": address,
@@ -75,7 +75,7 @@ func (c *MorphoClient) GetVaultPositionByWallet(address string, chainId int) (*m
 		return nil, fmt.Errorf("unexpected status code: %d, body: %s", res.StatusCode, string(resBody))
 	}
 
-	var morphoResponse model.MorphoResponse
+	var morphoResponse model.MorphoResponseEntity
 
 	errMapModel := json.Unmarshal(resBody, &morphoResponse)
 

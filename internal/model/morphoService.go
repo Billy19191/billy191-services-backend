@@ -2,38 +2,55 @@ package model
 
 import "encoding/json"
 
-type MorphoRequest struct {
+type MorphoRequestEntity struct {
 	Query         string         `json:"query"`
 	Variables     map[string]any `json:"variables"`
 	OperationName string         `json:"operationName"`
 }
 
-type MorphoResponse struct {
-	Data MorphoData `json:"data"`
+type MorphoResponseEntity struct {
+	Data MorphoDataEntity `json:"data"`
 }
 
-type MorphoData struct {
-	UserByAddress UserByAddress `json:"userByAddress"`
+type MorphoDataEntity struct {
+	UserByAddress UserByAddressEntity `json:"userByAddress"`
 }
 
-type UserByAddress struct {
-	VaultV2Positions []VaultV2Position `json:"vaultV2Positions"`
+type UserByAddressEntity struct {
+	VaultV2Positions []VaultV2PositionEntity `json:"vaultV2Positions"`
 }
 
-type VaultV2Position struct {
+type VaultV2PositionEntity struct {
 	Assets json.Number `json:"assets"`
 	Shares json.Number `json:"shares"`
-	Vault  Vault       `json:"vault"`
+	Vault  VaultEntity `json:"vault"`
 }
 
-type Vault struct {
-	AvgNetApy   float64 `json:"avgNetApy"`
-	Name        string  `json:"name"`
-	Owner       Owner   `json:"owner"`
-	Liquidity   float64 `json:"liquidity"`
-	TotalAssets float64 `json:"totalAssets"`
+type VaultEntity struct {
+	AvgNetApy   float64     `json:"avgNetApy"`
+	Name        string      `json:"name"`
+	Owner       OwnerEntity `json:"owner"`
+	Liquidity   float64     `json:"liquidity"`
+	TotalAssets float64     `json:"totalAssets"`
 }
 
-type Owner struct {
+type OwnerEntity struct {
 	Address string `json:"address"`
+}
+
+type MorphoResponseModel struct {
+	Data MorphoDataModel `json:"data"`
+}
+
+type MorphoDataModel struct {
+	Vault []VaultModel `json:"vault"`
+}
+
+type VaultModel struct {
+	VaultName     string  `json:"vaultName"`
+	TotalAssetUsd float64 `json:"totalAssetUsd"`
+	Liquidity     float64 `json:"liquidity"`
+	MyAssetUsd    float64 `json:"myAssetUsd"`
+	AvgApy        float64 `json:"avgApy"`
+	SharedInVault float64 `json:"sharedInVault"`
 }
