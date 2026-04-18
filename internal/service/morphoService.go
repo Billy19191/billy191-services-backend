@@ -41,7 +41,7 @@ func (s *MorphoService) GetVaultPositionByWallet(walletAddress string, chainID i
 			TotalAssetUsd: position.Vault.TotalAssets / math.Pow(10, 6),
 			Liquidity:     position.Vault.Liquidity / math.Pow(10, 6),
 			MyAssetUsd:    assets / math.Pow(10, 6),
-			AvgApy:        position.Vault.AvgNetApy * 100,
+			NetApy:        position.Vault.NetApy * 100,
 			SharedInVault: shareInVault * 100,
 		})
 	}

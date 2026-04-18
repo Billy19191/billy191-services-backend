@@ -27,7 +27,7 @@ type VaultV2PositionEntity struct {
 }
 
 type VaultEntity struct {
-	AvgNetApy   float64     `json:"avgNetApy"`
+	NetApy      float64     `json:"netApy"`
 	Name        string      `json:"name"`
 	Owner       OwnerEntity `json:"owner"`
 	Liquidity   float64     `json:"liquidity"`
@@ -51,6 +51,6 @@ type VaultModel struct {
 	TotalAssetUsd float64 `json:"totalAssetUsd"`
 	Liquidity     float64 `json:"liquidity"`
 	MyAssetUsd    float64 `json:"myAssetUsd"`
-	AvgApy        float64 `json:"avgApy"`
+	NetApy        float64 `json:"netApy"`
 	SharedInVault float64 `json:"sharedInVault"`
 }

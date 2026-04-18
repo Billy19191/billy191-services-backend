@@ -28,7 +28,7 @@ func (c *MorphoClient) GetVaultPositionByWallet(address string, chainId int) (*m
 			vaultV2Positions {
 			assets
 			vault {
-				avgNetApy
+				netApy
 				name
 				owner {
 				address
