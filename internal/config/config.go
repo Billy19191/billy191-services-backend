@@ -1,18 +1,19 @@
 package config
 
 import (
-	"database/sql"
 	"fmt"
 	"os"
 	"strconv"
 
 	"github.com/joho/godotenv"
-	_ "github.com/lib/pq"
+
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 type Config struct {
-	port int
-	db   *sql.DB
+	Port int
+	DB   *gorm.DB
 }
 
 func LoadConfig() (*Config, error) {
@@ -42,8 +43,8 @@ func LoadConfig() (*Config, error) {
 	)
 
 	return &Config{
-		port: portInt,
-		db:   db,
+		Port: portInt,
+		DB:   db,
 	}, nil
 }
 
@@ -54,14 +55,9 @@ func getEnvKey(key string, fallbackValue string) string {
 	return fallbackValue
 }
 
-func loadDb(dbHost string, dbPort string, dbUser string, dbPassword string, dbName string) (*sql.DB, error) {
+func loadDb(dbHost string, dbPort string, dbUser string, dbPassword string, dbName string) (*gorm.DB, error) {
 	pgDbPath := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", dbHost, dbPort, dbUser, dbPassword, dbName)
-	db, err := sql.Open("postgres", pgDbPath)
-	if err != nil {
-		panic(err)
-	}
-
-	err = db.Ping()
+	db, err := gorm.Open(postgres.Open(pgDbPath), &gorm.Config{})
 	if err != nil {
 		panic(err)
 	}
