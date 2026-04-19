@@ -13,7 +13,7 @@ func registerMorphoRoutes(router *gin.Engine, db *gorm.DB) {
 	morphoService := service.NewMorphoService(db, morphoClient)
 	morphoHandler := handler.NewMorphoHandler(morphoService)
 
-	v1 := router.Group("api/v1")
+	v1 := router.Group("/api/v1")
 
 	{
 		v1.GET("/vaultPosition", morphoHandler.GetCurrentVaultPosition)

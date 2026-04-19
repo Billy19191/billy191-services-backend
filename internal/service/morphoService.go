@@ -29,7 +29,10 @@ func (s *MorphoService) GetVaultPositionByWallet(walletAddress string, chainID i
 
 	var vaults []model.VaultModel
 	for _, position := range result.Data.UserByAddress.VaultV2Positions {
-		assets, _ := position.Assets.Float64()
+		assets, err := position.Assets.Float64()
+		if err != nil {
+			return nil, fmt.Errorf("failed to convert position assets to float64: %w", err)
+		}
 		if assets == 0 {
 			continue
 		}
