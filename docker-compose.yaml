@@ -32,8 +32,8 @@ services:
       - DB_NAME=${DB_NAME}
       - PORT=${PORT}
     depends_on:
-      database:
-        condition: service_healthy
+      - database
+    restart: on-failure
 
 volumes:
   postgres_data:
