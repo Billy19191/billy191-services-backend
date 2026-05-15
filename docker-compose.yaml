@@ -1,0 +1,43 @@
+services:
+  database:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: '${DB_NAME}'
+      POSTGRES_USER: '${DB_USERNAME}'
+      POSTGRES_PASSWORD: '${DB_PASSWORD}'
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  billy191-services:
+    build: .
+    ports:
+      - '8080:8080'
+    networks:
+      - default
+      - shared-net
+    environment:
+      - DB_HOST=database
+      - DB_PORT=${DB_PORT}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - PORT=${PORT}
+    depends_on:
+      database:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+
+networks:
+  shared-net:
+    external: true
+    name: billy-shared-network
