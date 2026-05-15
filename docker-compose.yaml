@@ -9,9 +9,9 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      - postgres_data:/var/lib/postgresql
+      - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}']
+      test: ['CMD-SHELL', 'pg_isready -U $${DB_USERNAME} -d $${DB_NAME}']
       interval: 5s
       timeout: 5s
       retries: 5
@@ -39,5 +39,4 @@ volumes:
 
 networks:
   shared-net:
-    external: true
-    name: billy-shared-network
+    name: billy-shared-network # This project owns/creates the network
