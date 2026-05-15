@@ -5,7 +5,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/joho/godotenv"
+	// "github.com/joho/godotenv"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -17,10 +17,10 @@ type Config struct {
 }
 
 func LoadConfig() (*Config, error) {
-	err := godotenv.Load()
-	if err != nil {
-		return nil, err
-	}
+	// _ := godotenv.Load()
+	// if err != nil {
+	// 	return nil, err
+	// }
 
 	port := getEnvKey("PORT", "")
 	dbHost := getEnvKey("DB_HOST", "")
