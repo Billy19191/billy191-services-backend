@@ -27,11 +27,12 @@ type VaultV2PositionEntity struct {
 }
 
 type VaultEntity struct {
-	NetApy      float64     `json:"netApy"`
-	Name        string      `json:"name"`
-	Owner       OwnerEntity `json:"owner"`
-	Liquidity   float64     `json:"liquidity"`
-	TotalAssets float64     `json:"totalAssets"`
+	NetApy              float64     `json:"netApy"`
+	Name                string      `json:"name"`
+	Owner               OwnerEntity `json:"owner"`
+	Liquidity           float64     `json:"liquidity"`
+	TotalAssets         float64     `json:"totalAssets"`
+	DeallocateLiquidity float64     `json:"forceDeallocatableLiquidity"`
 }
 
 type OwnerEntity struct {

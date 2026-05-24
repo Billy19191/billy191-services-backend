@@ -37,12 +37,13 @@ func (s *MorphoService) GetVaultPositionByWallet(walletAddress string, chainID i
 			continue
 		}
 
-		shareInVault := assets / position.Vault.TotalAssets
+		totalLiquidity := position.Vault.Liquidity + position.Vault.DeallocateLiquidity
+		shareInVault := assets / totalLiquidity
 
 		vaults = append(vaults, model.VaultModel{
 			VaultName:     position.Vault.Name,
 			TotalAssetUsd: position.Vault.TotalAssets / math.Pow(10, 6),
-			Liquidity:     position.Vault.Liquidity / math.Pow(10, 6),
+			Liquidity:     totalLiquidity / math.Pow(10, 6),
 			MyAssetUsd:    assets / math.Pow(10, 6),
 			NetApy:        position.Vault.NetApy * 100,
 			SharedInVault: shareInVault * 100,
