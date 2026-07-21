@@ -22,6 +22,9 @@ func LoadConfig() (*Config, error) {
 	// 	return nil, err
 	// }
 
+	environment := getEnvKey("APP_ENV", "development")
+	fmt.Println("Environment: ", environment)
+
 	port := getEnvKey("PORT", "")
 	dbHost := getEnvKey("DB_HOST", "")
 	dbPort := getEnvKey("DB_PORT", "")
