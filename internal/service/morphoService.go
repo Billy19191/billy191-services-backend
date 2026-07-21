@@ -55,3 +55,32 @@ func (s *MorphoService) GetVaultPositionByWallet(walletAddress string, chainID i
 		},
 	}, nil
 }
+
+func (s *MorphoService) GetBorrowPositionByWallet(walletAddress string, chainID int) (*model.MorphoResponseModel, error) {
+	result, err := s.morphoClient.GetBorrowPositionByWallet(walletAddress, chainID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get borrow position: %w", err)
+	}
+
+	var borrowPositions []model.BorrowModel
+	for _, position := range result.Data.UserByAddress.MarketPositions {
+		positionName := fmt.Sprintf("%s/%s", position.Market.CollateralAsset.Symbol, position.Market.LoanAsset.Symbol)
+		borrowPositions = append(borrowPositions, model.BorrowModel{
+			Name:            positionName,
+			HealthFactor:    position.HealthFactor,
+			BorrowPnlUsd:    position.State.BorrowPnlUsd,
+			BorrowAssetsUsd: position.State.BorrowAssetsUsd,
+			CollateralUsd:   position.State.CollateralUsd,
+			AvgBorrowApy:    position.Market.State.AvgBorrowApy * 100,
+			NetBorrowApy:    position.Market.State.NetBorrowApy * 100,
+			CollateralAsset: position.Market.CollateralAsset.Symbol,
+			LoanAsset:       position.Market.LoanAsset.Symbol,
+		})
+	}
+
+	return &model.MorphoResponseModel{
+		Data: model.MorphoDataModel{
+			Borrow: borrowPositions,
+		},
+	}, nil
+}

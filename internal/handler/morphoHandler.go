@@ -18,7 +18,7 @@ func NewMorphoHandler(service *service.MorphoService) *morphoHandler {
 	}
 }
 
-func (h *morphoHandler) GetCurrentVaultPosition(context *gin.Context) {
+func (h *morphoHandler) GetCurrentDepositVaultPosition(context *gin.Context) {
 	walletAddress := context.Query("walletAddress")
 	chainID := context.Query("chainID")
 
@@ -47,5 +47,37 @@ func (h *morphoHandler) GetCurrentVaultPosition(context *gin.Context) {
 
 	context.JSON(http.StatusOK, gin.H{
 		"data": result.Data.Vault,
+	})
+}
+
+func (h *morphoHandler) GetCurrentBorrowVaultPosition(context *gin.Context) {
+	walletAddress := context.Query("walletAddress")
+	chainID := context.Query("chainID")
+
+	if walletAddress == "" {
+		context.JSON(http.StatusBadRequest, gin.H{
+			"error": "walletAddress is required",
+		})
+		return
+	}
+
+	chainIDInt, err := strconv.Atoi(chainID)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{
+			"error": "Invalid chainID",
+		})
+		return
+	}
+
+	result, err := h.service.GetBorrowPositionByWallet(walletAddress, chainIDInt)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{
+		"data": result.Data.Borrow,
 	})
 }

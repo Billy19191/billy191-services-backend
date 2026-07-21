@@ -85,3 +85,72 @@ func (c *MorphoClient) GetVaultPositionByWallet(address string, chainId int) (*m
 
 	return &morphoResponse, nil
 }
+
+func (c *MorphoClient) GetBorrowPositionByWallet(address string, chainId int) (*model.MorphoResponseEntity, error) {
+	const borrowPositionQuery = `query UserByAddress($address: String!, $chainId: Int) {
+ 		userByAddress(address: $address, chainId: $chainId) {
+			marketPositions {
+				healthFactor
+				state {
+					borrowPnlUsd
+					borrowAssetsUsd
+					collateralUsd
+				}
+				market {
+					state {
+						avgBorrowApy
+						netBorrowApy
+					}
+					collateralAsset {
+						symbol
+					}
+					loanAsset {
+						symbol
+					}
+				}
+			}
+		}
+	}`
+	reqBody := model.MorphoRequestEntity{
+		Query: borrowPositionQuery,
+		Variables: map[string]any{
+			"address": address,
+			"chainId": chainId,
+		},
+		OperationName: "UserByAddress",
+	}
+
+	jsonBody, err := json.Marshal(reqBody)
+	if err != nil {
+		return nil, fmt.Errorf("failed to marshal request: %w", err)
+	}
+
+	req, err := http.NewRequest(http.MethodPost, c.baseURL, bytes.NewBuffer(jsonBody))
+	if err != nil {
+		return nil, fmt.Errorf("failed to create request: %w", err)
+	}
+	req.Header.Set("Content-Type", "application/json")
+
+	res, err := c.httpClient.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("failed to send request: %w", err)
+	}
+	defer res.Body.Close()
+
+	resBody, err := io.ReadAll(res.Body)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read response: %w", err)
+	}
+
+	if res.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("unexpected status code: %d, body: %s", res.StatusCode, string(resBody))
+	}
+
+	var morphoResponse model.MorphoResponseEntity
+	if err := json.Unmarshal(resBody, &morphoResponse); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal response: %w", err)
+	}
+
+	return &morphoResponse, nil
+
+}

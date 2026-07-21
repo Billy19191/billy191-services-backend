@@ -18,6 +18,7 @@ type MorphoDataEntity struct {
 
 type UserByAddressEntity struct {
 	VaultV2Positions []VaultV2PositionEntity `json:"vaultV2Positions"`
+	MarketPositions  []MarketPositionEntity  `json:"marketPositions"`
 }
 
 type VaultV2PositionEntity struct {
@@ -38,12 +39,40 @@ type OwnerEntity struct {
 	Address string `json:"address"`
 }
 
+type MarketPositionEntity struct {
+	HealthFactor float64           `json:"healthFactor"`
+	State        MarketStateEntity `json:"state"`
+	Market       MarketEntity      `json:"market"`
+}
+
+type MarketStateEntity struct {
+	BorrowPnlUsd    float64 `json:"borrowPnlUsd"`
+	BorrowAssetsUsd float64 `json:"borrowAssetsUsd"`
+	CollateralUsd   float64 `json:"collateralUsd"`
+}
+
+type MarketEntity struct {
+	State           MarketApyEntity         `json:"state"`
+	CollateralAsset MarketAssetSymbolEntity `json:"collateralAsset"`
+	LoanAsset       MarketAssetSymbolEntity `json:"loanAsset"`
+}
+
+type MarketApyEntity struct {
+	AvgBorrowApy float64 `json:"avgBorrowApy"`
+	NetBorrowApy float64 `json:"netBorrowApy"`
+}
+
+type MarketAssetSymbolEntity struct {
+	Symbol string `json:"symbol"`
+}
+
 type MorphoResponseModel struct {
 	Data MorphoDataModel `json:"data"`
 }
 
 type MorphoDataModel struct {
-	Vault []VaultModel `json:"vault"`
+	Vault  []VaultModel  `json:"vault"`
+	Borrow []BorrowModel `json:"borrow"`
 }
 
 type VaultModel struct {
@@ -53,4 +82,16 @@ type VaultModel struct {
 	MyAssetUsd    float64 `json:"myAssetUsd"`
 	NetApy        float64 `json:"netApy"`
 	SharedInVault float64 `json:"sharedInVault"`
+}
+
+type BorrowModel struct {
+	Name            string  `json:"name"`
+	HealthFactor    float64 `json:"healthFactor"`
+	BorrowPnlUsd    float64 `json:"borrowPnlUsd"`
+	BorrowAssetsUsd float64 `json:"borrowAssetsUsd"`
+	CollateralUsd   float64 `json:"collateralUsd"`
+	AvgBorrowApy    float64 `json:"avgBorrowApy"`
+	NetBorrowApy    float64 `json:"netBorrowApy"`
+	CollateralAsset string  `json:"collateralAsset"`
+	LoanAsset       string  `json:"loanAsset"`
 }
