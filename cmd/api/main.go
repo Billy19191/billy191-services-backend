@@ -18,6 +18,6 @@ func main() {
 	v1.RegisterRoutes(router, config.DB)
 
 	if err := router.Run(":" + strconv.Itoa(config.Port)); err != nil {
-		fmt.Println("Error")
+		fmt.Println(err)
 	}
 }

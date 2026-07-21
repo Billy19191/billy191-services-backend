@@ -35,6 +35,7 @@ func (c *MorphoClient) GetVaultPositionByWallet(address string, chainId int) (*m
 				}
 				liquidity
 				totalAssets
+				forceDeallocatableLiquidity
 			}
 			shares
 			}

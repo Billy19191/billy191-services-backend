@@ -1,0 +1,22 @@
+services:
+  database:
+    environment:
+      POSTGRES_DB: '${DEV_DB_NAME}'
+      POSTGRES_USER: '${DEV_DB_USERNAME}'
+      POSTGRES_PASSWORD: '${DEV_DB_PASSWORD}'
+
+  billy191-services:
+    ports:
+      - '${DEV_PORT}:${DEV_PORT}'
+    environment:
+      - APP_ENV=development
+      - DB_HOST=database
+      - DB_PORT=${DEV_DB_PORT}
+      - DB_USERNAME=${DEV_DB_USERNAME}
+      - DB_PASSWORD=${DEV_DB_PASSWORD}
+      - DB_NAME=${DEV_DB_NAME}
+      - PORT=${DEV_PORT}
+
+networks:
+  shared-net:
+    external: true
