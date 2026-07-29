@@ -26,10 +26,10 @@ func (s *AccountableService) GetPositionAccountableData(walletAddress string) (*
 	return result, nil
 }
 
-func (s *AccountableService) GetDepositAmount(walletAddress string) (*model.AccountableResponseEntity, error) {
-	result, err := s.accountableClient.GetDepositAmount(walletAddress)
+func (s *AccountableService) GetLoanOverview(userAddress string) (*model.AccountableLoanOverviewEntity, error) {
+	result, err := s.accountableClient.GetLoanOverview(userAddress)
 	if err != nil {
-		return nil, fmt.Errorf("failed to get accountable deposit amount: %w", err)
+		return nil, fmt.Errorf("failed to get loan overview: %w", err)
 	}
 
 	return result, nil
