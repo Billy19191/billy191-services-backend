@@ -1,10 +1,7 @@
 package model
 
 type AccountableResponseEntity struct {
-	VaultAllocations   []AccountableVaultAllocationEntity `json:"vault_allocations,omitempty"`
-	TotalInvested      float64                            `json:"total_invested,omitempty"`
-	TotalInvestedInUsd float64                            `json:"total_invested_in_usd,omitempty"`
-	UnrealizedPnlUsd   float64                            `json:"unrealized_pnl_usd,omitempty"`
+	VaultAllocations []AccountableVaultAllocationEntity `json:"vault_allocations,omitempty"`
 }
 
 type AccountableVaultAllocationEntity struct {
@@ -33,4 +30,10 @@ type AccountableVaultAllocationEntity struct {
 	VaultAddress             string  `json:"vaultAddress"`
 	VaultName                string  `json:"vaultName"`
 	TotalInvestedInVaultUsd  float64 `json:"totalInvestedInVaultUsd"`
+}
+
+type AccountableLoanOverviewEntity struct {
+	TotalInvested      int64   `json:"total_invested"`
+	TotalInvestedInUsd float64 `json:"total_invested_in_usd"`
+	UnrealizedPnlUsd   float64 `json:"unrealized_pnl_usd"`
 }
