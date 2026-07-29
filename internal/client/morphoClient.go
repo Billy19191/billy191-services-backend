@@ -96,6 +96,7 @@ func (c *MorphoClient) GetBorrowPositionByWallet(address string, chainId int) (*
 					borrowPnlUsd
 					borrowAssetsUsd
 					collateralUsd
+					collateral
 				}
 				market {
 					state {

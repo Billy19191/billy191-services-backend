@@ -25,3 +25,12 @@ func (s *AccountableService) GetPositionAccountableData(walletAddress string) (*
 
 	return result, nil
 }
+
+func (s *AccountableService) GetDepositAmount(walletAddress string) (*model.AccountableResponseEntity, error) {
+	result, err := s.accountableClient.GetDepositAmount(walletAddress)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get accountable deposit amount: %w", err)
+	}
+
+	return result, nil
+}
