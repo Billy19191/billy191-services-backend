@@ -67,15 +67,16 @@ func (s *MorphoService) GetBorrowPositionByWallet(walletAddress string, chainID 
 	for _, position := range result.Data.UserByAddress.MarketPositions {
 		positionName := fmt.Sprintf("%s/%s", position.Market.CollateralAsset.Symbol, position.Market.LoanAsset.Symbol)
 		borrowPositions = append(borrowPositions, model.BorrowModel{
-			Name:            positionName,
-			HealthFactor:    position.HealthFactor,
-			BorrowPnlUsd:    position.State.BorrowPnlUsd,
-			BorrowAssetsUsd: position.State.BorrowAssetsUsd,
-			CollateralUsd:   position.State.CollateralUsd,
-			AvgBorrowApy:    position.Market.State.AvgBorrowApy * 100,
-			NetBorrowApy:    position.Market.State.NetBorrowApy * 100,
-			CollateralAsset: position.Market.CollateralAsset.Symbol,
-			LoanAsset:       position.Market.LoanAsset.Symbol,
+			Name:                  positionName,
+			HealthFactor:          position.HealthFactor,
+			BorrowPnlUsd:          position.State.BorrowPnlUsd,
+			BorrowAssetsUsd:       position.State.BorrowAssetsUsd,
+			CollateralAssetAmount: position.State.Collateral,
+			CollateralUsd:         position.State.CollateralUsd,
+			AvgBorrowApy:          position.Market.State.AvgBorrowApy * 100,
+			NetBorrowApy:          position.Market.State.NetBorrowApy * 100,
+			CollateralAsset:       position.Market.CollateralAsset.Symbol,
+			LoanAsset:             position.Market.LoanAsset.Symbol,
 		})
 	}
 

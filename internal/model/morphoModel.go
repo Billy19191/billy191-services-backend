@@ -50,6 +50,7 @@ type MarketStateEntity struct {
 	BorrowPnlUsd    float64 `json:"borrowPnlUsd"`
 	BorrowAssetsUsd float64 `json:"borrowAssetsUsd"`
 	CollateralUsd   float64 `json:"collateralUsd"`
+	Collateral      float64 `json:"collateral"`
 }
 
 type MarketEntity struct {
@@ -86,13 +87,14 @@ type VaultModel struct {
 }
 
 type BorrowModel struct {
-	Name            string  `json:"name"`
-	HealthFactor    float64 `json:"healthFactor"`
-	BorrowPnlUsd    float64 `json:"borrowPnlUsd"`
-	BorrowAssetsUsd float64 `json:"borrowAssetsUsd"`
-	CollateralUsd   float64 `json:"collateralUsd"`
-	AvgBorrowApy    float64 `json:"avgBorrowApy"`
-	NetBorrowApy    float64 `json:"netBorrowApy"`
-	CollateralAsset string  `json:"collateralAsset"`
-	LoanAsset       string  `json:"loanAsset"`
+	Name                  string  `json:"name"`
+	HealthFactor          float64 `json:"healthFactor"`
+	BorrowPnlUsd          float64 `json:"borrowPnlUsd"`
+	BorrowAssetsUsd       float64 `json:"borrowAssetsUsd"`
+	CollateralAssetAmount float64 `json:"collateralAssetAmount"`
+	CollateralUsd         float64 `json:"collateralUsd"`
+	AvgBorrowApy          float64 `json:"avgBorrowApy"`
+	NetBorrowApy          float64 `json:"netBorrowApy"`
+	CollateralAsset       string  `json:"collateralAsset"`
+	LoanAsset             string  `json:"loanAsset"`
 }
