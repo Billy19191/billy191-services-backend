@@ -82,8 +82,8 @@ func (c *AccountableClient) GetPositionAccountableData(walletAddress string) (*m
 
 	var accountableResponse model.AccountableResponseEntity
 	if err := json.Unmarshal(earnBody, &accountableResponse); err == nil {
-		if len(accountableResponse.VaultAllocations) > 0 && loanResult.TotalInvested > 0 {
-			accountableResponse.VaultAllocations[0].TotalInvestedInVaultUsd = loanResult.TotalInvestedInUsd
+		if len(accountableResponse.VaultAllocations) > 0 && loanResult.TotalDeposits > 0 {
+			accountableResponse.VaultAllocations[0].TotalInvestedInVaultUsd = loanResult.LoopedTvlUsd
 			return &accountableResponse, nil
 		} else {
 			return nil, fmt.Errorf("no vault allocations found")
@@ -103,7 +103,7 @@ func (c *AccountableClient) GetPositionAccountableData(walletAddress string) (*m
 }
 
 func (c *AccountableClient) GetLoanOverview(userAddress string) (*model.AccountableLoanOverviewEntity, error) {
-	requestURL := fmt.Sprintf("%s/loan/601091250/overview?user_address=%s", strings.TrimRight(c.baseURL, "/"), userAddress)
+	requestURL := fmt.Sprintf("%s/users/%s/personal-data-overview", strings.TrimRight(c.baseURL, "/"), userAddress)
 
 	req, err := http.NewRequest(http.MethodGet, requestURL, nil)
 	if err != nil {

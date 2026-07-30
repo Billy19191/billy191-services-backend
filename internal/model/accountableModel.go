@@ -33,7 +33,12 @@ type AccountableVaultAllocationEntity struct {
 }
 
 type AccountableLoanOverviewEntity struct {
-	TotalInvested      int64   `json:"total_invested"`
-	TotalInvestedInUsd float64 `json:"total_invested_in_usd"`
-	UnrealizedPnlUsd   float64 `json:"unrealized_pnl_usd"`
+	ActiveVaults         int     `json:"active_vaults"`
+	CurrentAverageApy    float64 `json:"current_average_apy"`
+	LoopDebtUsd          float64 `json:"loop_debt_usd"`
+	LoopedTvlUsd         float64 `json:"looped_tvl_usd"`
+	RealizedPnlUsd       float64 `json:"realized_pnl_usd"`
+	TotalDeposits        float64 `json:"total_deposits"`
+	TotalInterestClaimed float64 `json:"total_interest_claimed"`
+	UnrealizedPnlUsd     float64 `json:"unrealized_pnl_usd"`
 }
